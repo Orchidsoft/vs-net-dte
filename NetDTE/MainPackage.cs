@@ -202,7 +202,17 @@ namespace NetDTE
             if (sassProjectItem != null)
                 parent = sassProjectItem.ProjectItems;
 
-            parent.AddFromFile(cssPath);
+            try
+            {
+                parent.AddFromFile(cssPath);
+            }
+            catch (Exception e)
+            {
+                Logger.WriteLine("Exception encountered when trying to add a file to the project");
+                Logger.WriteLine(e.Message);
+                Logger.WriteLine("Stack trace:");
+                Logger.WriteLine(e.StackTrace);
+            }
         }
 
         private void Solution_AfterClosed()
