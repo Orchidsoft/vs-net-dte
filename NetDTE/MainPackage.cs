@@ -163,11 +163,11 @@ namespace NetDTE
                     Logger.WriteLine($"Added { args.Name } to the project");
                 };
 
-                watcher.Changed += (sender, args) =>
-                {
-                    ProcessCssFile(parent, args.FullPath);
-                    Logger.WriteLine($"Processed { args.Name }");
-                };
+                //watcher.Changed += (sender, args) =>
+                //{
+                //    ProcessCssFile(parent, args.FullPath);
+                //    Logger.WriteLine($"Processed { args.Name }");
+                //};
 
                 watcher.EnableRaisingEvents = true;
 
@@ -199,11 +199,11 @@ namespace NetDTE
             var sassPath = $"{Path.Combine(Path.GetDirectoryName(cssPath), Path.GetFileNameWithoutExtension(cssPath))}.scss";
             var sassProjectItem = AssetCache.Lookup(sassPath);
 
-            if (sassProjectItem != null)
-                parent = sassProjectItem.ProjectItems;
-
             try
             {
+                if (sassProjectItem != null)
+                    parent = sassProjectItem.ProjectItems;
+            
                 parent.AddFromFile(cssPath);
             }
             catch (Exception e)
